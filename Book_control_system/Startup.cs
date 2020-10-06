@@ -26,8 +26,8 @@ namespace Book_control_system
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<BookControlSystemContext>(options => 
-            options.UseSqlServer(Configuration.GetConnectionString("BookControlSystem")));
+            services.AddDbContext<BookControlSystemContext>(options =>
+         options.UseSqlServer(Configuration.GetConnectionString("BookControlSystem")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
