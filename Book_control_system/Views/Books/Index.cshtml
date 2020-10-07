@@ -1,0 +1,58 @@
+﻿@using Microsoft.CodeAnalysis.CSharp
+@model Book_control_system.Models.BooksView
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+<p>BookList page</p>
+
+<form asp-controller="Books" asp-action="Index" method="get">
+    <p>Select Author Id</p>
+    <select asp-for="authorId" asp-items="Model.AuthorList">
+        <option value=""></option>
+    </select>
+    <input type="submit" value="Submint" />
+</form>
+
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookList[0].Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookList[0].Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookList[0].ReleaseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookList[0].authors)
+        </th>
+        
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.BookList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.authors)
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
