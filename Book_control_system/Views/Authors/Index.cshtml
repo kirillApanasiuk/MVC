@@ -1,7 +1,51 @@
-﻿@{
+﻿@model Book_control_system.Models.AuthorsView
+@{
     ViewData["Title"] = "Index";
 }
 
 <h2>Index</h2>
+<p>AuthorList page</p>
 
-<p>Authors page</p>
+<form asp-controller="Authors" asp-action="Index" method="get">
+    <p>Select Book id</p>
+    <select asp-for="bookId" asp-items="Model.BooksList">
+        <option value=""></option>
+    </select>
+    <input type="submit" value="Submint" />
+</form>
+
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AuthorList[0].Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AuthorList[0].Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AuthorList[0].books)
+        </th>
+       
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.AuthorList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.books)
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
