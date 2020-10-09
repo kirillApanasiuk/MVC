@@ -26,7 +26,7 @@ namespace Book_control_system
             services.AddScoped<IAuthorRepository, AuthorDefaultRepository>();
             services.AddScoped<IBookRepository, BookDefaultRepository>();
             services.AddDbContext<BookControlSystemContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("BookControlSystem")));
+                options.UseSqlite(Configuration.GetConnectionString("BookControlSystem")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
