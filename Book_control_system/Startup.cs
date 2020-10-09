@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Book_control_system.Data;
+using Book_control_system.Repositories.AuthorsRepositories;
+using Book_control_system.Repositories.BooksRepositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,8 +23,10 @@ namespace Book_control_system
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<BookControlSystemContext>(options =>
-         options.UseSqlServer(Configuration.GetConnectionString("BookControlSystem")));
+            services.AddScoped<IAuthorRepository, AuthorDefaultRepository>();
+            services.AddScoped<IBookRepository, BookDefaultRepository>();
+            services.AddDbContext<BookControlSystemContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("BookControlSystem")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -25,16 +25,7 @@
     <input type="submit" value="Submint" />
 </form>
 
-@*@{
-    var selectList = new SelectList(
-        new List<SelectListItem>
-        {
-            new SelectListItem {Text = "Another Text", Value = "1"},
-            new SelectListItem {Text = "Another", Value = "2"},
-                                }, "Value", "Text");
-}
 
-@Html.DropDownList("ddlDropDownList", selectList, "Default label", new { @class = "css-class" })*@
 
 <table class="table">
     <thead>

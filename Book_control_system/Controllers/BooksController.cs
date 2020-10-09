@@ -1,59 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Book_control_system.Data;
+﻿using System.Threading.Tasks;
 using Book_control_system.Models;
-using Book_control_system.Models.ViewModels;
+using Book_control_system.Repositories.BooksRepositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace Book_control_system.Controllers
 { 
     public class BooksController : Controller
     {
 
-        private readonly BookControlSystemContext _context;
+   
+        private readonly IBookRepository _bookRepository;
+       
 
-        public BooksController(BookControlSystemContext context)
+        public BooksController(IBookRepository bookRepository)
         {
-            _context = context;
+            _bookRepository = bookRepository;
         }
-        public async Task<IActionResult> Index(string authorId)
+        public async Task<IActionResult> Index(int  authorId)
         {
-            List<Book> books;
-            if (!string.IsNullOrEmpty(authorId))
-            {
-                books = await _context.Books.Where(b => b.BookAuthors.Any(ba => ba.AuthorId == int.Parse(authorId))).ToListAsync();
-            }
-            else
-            {
-                books = await _context.Books.ToListAsync();
-            }
-
-            var representBookList = new List<BookForView>();
-            foreach (var book in books)
-            {
-                List<Author> bookAuthors = await _context.Authors
-                    .Where(a => a.BookAuthors.Any(ba => ba.BookId == book.Id)).ToListAsync();
-                string authors = "";
-                foreach (var author in bookAuthors)
-                {
-                    if (authors.Length == 0) authors += author.Surname;
-                    authors += $",{author.Surname}";
-                }
-                representBookList.Add(new BookForView
-                {
-                    Id = book.Id,Title = book.Title,ReleaseDate = book.ReleaseDate,Authors = authors
-
-                });
-            }
-            var booksRepresentation = new BooksView { BookList = representBookList,AuthorList = await GetAuthorList()};
+            var booksRepresentation = new BooksView { BookList = await _bookRepository.GetBookRepresentationList(authorId),AuthorList = await _bookRepository.GetAuthorList()};
             return View(booksRepresentation);
-
         }
-
 
         public IActionResult Create()
         {
@@ -76,30 +43,8 @@ namespace Book_control_system.Controllers
                         return View();
                     }
                 }
-                Book newBook = new Book { ReleaseDate = bookCreating.
-                    ReleaseDate, Title =bookCreating.Title, BookAuthors = new List<BookAuthor>() };
-                List<Author> authorsList = new List<Author>();
-                List<BookAuthor> bookAuthorsList = new List<BookAuthor>();
-                foreach (var author in authors)
-                {
-                    Author dbAuthor = null;
-                    var existedAuthor  = await  _context.Authors.Where(a => a.Surname == author).FirstOrDefaultAsync();
-                    if (existedAuthor == null)
-                    {
-                        dbAuthor = new Author { Surname = author };
-                        authorsList.Add(dbAuthor);
-                    }
-                    else
-                    {
-                        dbAuthor = existedAuthor;
-                    }
-                    bookAuthorsList.Add(new BookAuthor { Book = newBook, Author = dbAuthor });
-                }
-                newBook.BookAuthors.AddRange(bookAuthorsList);
-                await _context.Authors.AddRangeAsync(authorsList);
-                await _context.Books.AddAsync(newBook);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                await _bookRepository.AddBook(authors, bookCreating);
             } 
             return View(bookCreating);
         }
@@ -110,21 +55,11 @@ namespace Book_control_system.Controllers
             {
                 return NotFound();
             }
-
-            var book = await _context.Books.FindAsync(id);
+            var book = await _bookRepository.GetBook((int)id);
             if (book == null) return NotFound();
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
+            await _bookRepository.DeleteBook((int) id);
             return RedirectToAction(nameof(Index));
         }
-
-        private async Task<List<Author>> GetAuthorList()
-        {
-           
-            return await (from a in _context.Authors select a).Distinct().ToListAsync();
-           
-        }
     }
-    
 }
     
