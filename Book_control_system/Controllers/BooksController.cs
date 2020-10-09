@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Book_control_system.Data;
 using Book_control_system.Models;
+using Book_control_system.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -44,15 +45,14 @@ namespace Book_control_system.Controllers
                 }
                 representBookList.Add(new BookForView
                 {
-                    Id = book.Id,Title = book.Title,ReleaseDate = book.ReleaseDate,authors = authors
+                    Id = book.Id,Title = book.Title,ReleaseDate = book.ReleaseDate,Authors = authors
 
                 });
             }
-            var booksRepresentation = new BooksView { BookList = representBookList,AuthorList = new SelectList(await (from a in _context.Authors select a.Id).Distinct().ToListAsync())};
+            var booksRepresentation = new BooksView { BookList = representBookList,AuthorList = await GetAuthorList()};
             return View(booksRepresentation);
 
         }
-
 
 
         public IActionResult Create()
@@ -117,6 +117,14 @@ namespace Book_control_system.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        private async Task<List<Author>> GetAuthorList()
+        {
+           
+            return await (from a in _context.Authors select a).Distinct().ToListAsync();
+           
+        }
     }
+    
 }
     

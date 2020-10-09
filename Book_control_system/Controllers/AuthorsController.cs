@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Book_control_system.Data;
 using Book_control_system.Models;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -61,11 +60,21 @@ namespace Book_control_system.Controllers
                 {
                    Id = author.Id,
                    Surname = author.Surname,
-                   books = books
+                   Books = books
 
                 });
+                 
+                var bookList = await GetBookList();
+
             }
-            return View( new AuthorsView(){AuthorList = representAuthorList,BooksList = new SelectList(await (from b in _context.Books select b.Id).Distinct().ToListAsync())});
+            return View(new AuthorsView() { AuthorList = representAuthorList, BooksList = await GetBookList() });
+           /* return View();*/
         }
+
+        private async Task<List<Book>> GetBookList()
+        {
+            return (await (from b in _context.Books select b).Distinct().ToListAsync());
+        }
+
     }
 }

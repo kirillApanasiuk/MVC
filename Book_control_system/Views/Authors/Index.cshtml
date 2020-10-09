@@ -7,10 +7,17 @@
 <p>AuthorList page</p>
 
 <form asp-controller="Authors" asp-action="Index" method="get">
-    <p>Select Book id</p>
-    <select asp-for="bookId" asp-items="Model.BooksList">
-        <option value=""></option>
-    </select>
+    <p>Select Book</p>
+    @{
+
+        var selectListItems = new List<SelectListItem>();
+        foreach (var book in Model.BooksList)
+        {
+            selectListItems.Add(new SelectListItem { Text = book.Title, Value = book.Id.ToString() });
+        }
+        var selectList = new SelectList(selectListItems, "Value", "Text");
+    }
+    @Html.DropDownList("BookId", selectList, "", new { @class = "css-class" })
     <input type="submit" value="Submint" />
 </form>
 
@@ -26,7 +33,7 @@
             @Html.DisplayNameFor(model => model.AuthorList[0].Surname)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AuthorList[0].books)
+            @Html.DisplayNameFor(model => model.AuthorList[0].Books)
         </th>
        
         <th></th>
@@ -43,7 +50,7 @@
                 @Html.DisplayFor(modelItem => item.Surname)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.books)
+                @Html.DisplayFor(modelItem => item.Books)
             </td>
         </tr>
     }

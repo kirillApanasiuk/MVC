@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,15 +11,13 @@ namespace Book_control_system.Models
     public class AuthorsView
     {
         public List<AuthorForView> AuthorList { get; set; }
-        public SelectList BooksList { get; set; }
-        public List<string> bookId{ get; set; }
+        public List<Book> BooksList { get; set; }
+        public List<string> BookId{ get; set; }
     }
 
-    public class AuthorForView
+    public class AuthorForView:AuthorBase
     {
-        public int Id { get; set; }
-        public string Surname { get; set; }
         [Display(Name = "Books")]
-        public string books { get; set; }
+        public string Books { get; set; }
     }
 }

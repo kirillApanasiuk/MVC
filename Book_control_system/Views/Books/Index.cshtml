@@ -11,54 +11,70 @@
 </p>
 
 <form asp-controller="Books" asp-action="Index" method="get">
-    <p>Select Author Id</p>
-    <select asp-for="authorId" asp-items="Model.AuthorList">
-        <option value=""></option>
-    </select>
+    <p>Select Author </p>
+    @{
+
+        var selectListItems = new List<SelectListItem>();
+        foreach (var author in Model.AuthorList)
+        {
+            selectListItems.Add(new SelectListItem { Text = author.Surname, Value = author.Id.ToString() });
+        }
+        var selectList = new SelectList(selectListItems, "Value", "Text");
+    }
+    @Html.DropDownList("AuthorId", selectList, "", new { @class = "css-class" })
     <input type="submit" value="Submint" />
 </form>
 
+@*@{
+    var selectList = new SelectList(
+        new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Another Text", Value = "1"},
+            new SelectListItem {Text = "Another", Value = "2"},
+                                }, "Value", "Text");
+}
 
+@Html.DropDownList("ddlDropDownList", selectList, "Default label", new { @class = "css-class" })*@
 
 <table class="table">
     <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BookList[0].Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookList[0].Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookList[0].ReleaseDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookList[0].authors)
-        </th>
-        
-        <th></th>
-    </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookList[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookList[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookList[0].ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookList[0].Authors)
+            </th>
+
+            <th></th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.BookList)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.authors)
-            </td>
-            <td>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-    }
+        @foreach (var item in Model.BookList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Authors)
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

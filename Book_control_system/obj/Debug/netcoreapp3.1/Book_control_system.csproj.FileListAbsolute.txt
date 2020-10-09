@@ -166,8 +166,8 @@ C:\Users\User2\source\repos\Book_control_system\Book_control_system\bin\Debug\ne
 C:\Users\User2\source\repos\Book_control_system\Book_control_system\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\User2\source\repos\Book_control_system\Book_control_system\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\User2\source\repos\Book_control_system\Book_control_system\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\User2\source\repos\Book_control_system\Book_control_system\obj\Debug\netcoreapp3.1\Book_control_system.csproj.CoreCompileInputs.cache
-C:\Users\User2\source\repos\Book_control_system\Book_control_system\obj\Debug\netcoreapp3.1\Book_control_system.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\User2\source\repos\Book_control_system\Book_control_system\obj\Debug\netcoreapp3.1\Razor\Views\Books\Index.cshtml.g.cs
 C:\Users\User2\source\repos\Book_control_system\Book_control_system\obj\Debug\netcoreapp3.1\Razor\Views\Authors\Index.cshtml.g.cs
 C:\Users\User2\source\repos\Book_control_system\Book_control_system\obj\Debug\netcoreapp3.1\Razor\Views\Books\Create.cshtml.g.cs
+C:\Users\User2\source\repos\Book_control_system\Book_control_system\obj\Debug\netcoreapp3.1\Book_control_system.csproj.CoreCompileInputs.cache
+C:\Users\User2\source\repos\Book_control_system\Book_control_system\obj\Debug\netcoreapp3.1\Book_control_system.MvcApplicationPartsAssemblyInfo.cache

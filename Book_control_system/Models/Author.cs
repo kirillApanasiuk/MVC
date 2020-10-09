@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 
 namespace Book_control_system.Models
 {
-    public class Author
+    public class Author:AuthorBase
+    {
+        public List<BookAuthor> BookAuthors { get; set; }
+    }
+
+    public abstract class AuthorBase
     {
         public int Id { get; set; }
-        public string  Surname {get;set;}
-
-
-        public List<BookAuthor> BookAuthors { get; set; }
+        public string Surname { get; set; }
     }
 }
